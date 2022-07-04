@@ -6,30 +6,36 @@ const pokedex = document.getElementById('pokedex')
 
 const userSearch = $("#input").val();
 
-const pokeSearchUrl = `https://pokeapi.co/api/v2/pokemon/1`
 
-function fetchPokemon(e){
-    fetch(pokeSearchUrl).then((response) => response.json()).then((data) => {
-        console.log(data);
-        const pokemon = {
+
+function fetchPokemon(e) {
+    const promises = [];
+    for (let i = 1; i <= 150; i++) {
+        const pokeSearchUrl = `https://pokeapi.co/api/v2/pokemon/${i}`
+        promises.push(fetch(pokeSearchUrl).then((response) => response.json()));
+    }
+
+    Promise.all(promises).then(results => {
+        const pokemon = results.map(data => ({
             name: data.name,
             id: data.id,
             image: data.sprites['front_default'],
             type: data.types.map((type) => type.type.name).join(', ')
-        };
-        console.log(pokemon);
-    })
+        }))
+        displayPokemon(pokemon);
+    });
+}
+
 
     const displayPokemon = (pokemon) => {
         const pokemonHTMLString =  pokemon.map(pokeman => `
-        <li>
-            <img src = "${pokeman.image}"/>
-            <h2>${pokeman.id}. ${pokeman.name}</h2>
-            <p>Type: ${pokeman.type}</p>
+        <li class="card">
+            <img class="card-img" src = "${pokeman.image}"/>
+            <h2 class="card-title">${pokeman.id}. ${pokeman.name}</h2>
+            <p class="card-subtitle">Type: ${pokeman.type}</p>
         </li>
-    `).join("")
+    `).join('')
         pokedex.innerHTML = pokemonHTMLString;
-    };
 }
 
 fetchPokemon();
