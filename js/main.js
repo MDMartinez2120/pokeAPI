@@ -1,18 +1,21 @@
-$("button").click(function (){
-    searchPokemon();
-})
+const pokedex = document.getElementById('pokedex');
+const userSearch = document.getElementById('searchInput');
+let pokemonCharacters = [];
 
-const pokedex = document.getElementById('pokedex')
-
-const userSearch = $("#input").val();
-
-
+userSearch.addEventListener('keyup', (e) => {
+    const searchString = e.target.value;
+    const filteredPoke = pokemonCharacters.filter((poke) => {
+        return (poke.name.includes(searchString)
+        );
+    });
+    displayPokemon(filteredPoke);
+});
 
 function fetchPokemon(e) {
     const promises = [];
     for (let i = 1; i <= 150; i++) {
-        const pokeSearchUrl = `https://pokeapi.co/api/v2/pokemon/${i}`
-        promises.push(fetch(pokeSearchUrl).then((response) => response.json()));
+        const pokeUrl = `https://pokeapi.co/api/v2/pokemon/${i}`
+        promises.push(fetch(pokeUrl).then((response) => response.json()));
     }
 
     Promise.all(promises).then(results => {
@@ -39,44 +42,3 @@ function fetchPokemon(e) {
 }
 
 fetchPokemon();
-
-
-
-
-
-// const mapResults = (data) => `
-//     <div>
-//         <img src="${data.name}">
-//     </div>
-//
-//     <div class = "results">
-//         <h2 class="text-white">${data.name}</h2>
-//         <p class="text-white">${data.weight}</p>
-//     </div>`
-//
-// const userSearch = $("#input").val();
-//
-// const pokeSearchUrl = `https://pokeapi.co/api/v2/pokemon/${userSearch}`
-//
-// function searchPokemon(e){
-//     fetch(pokeSearchUrl).then((response) => response.json()).then((data) => {
-//         const pokeResults = data.map(mapResults);
-//         return $(".results").html(pokeResults)
-//
-//         })
-//     }
-
-
-
-// searchPokemon();
-// document.querySelector("#results").innerHTML = `
-//         <div class="d-flex justify-content-center mt-5 me-3 flex-wrap">
-//     <div>
-//         <img src="${data.sprites.other["official-artwork"].front_default}" alt="${data.name}">
-//     </div>
-//
-//     <div class = "results">
-//         <h2 class="text-white">${data.name}</h2>
-//         <p class="text-white">${data.weight}</p>
-//     </div>
-// </div>`;
