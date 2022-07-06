@@ -6,10 +6,9 @@ let pokemon = [];
 searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value;
     const filteredPoke = pokemon.filter((poke) => {
-        return poke.name.includes(searchString);
+        return poke.name.toLowerCase().includes(searchString);
     });
     displayPokemon(filteredPoke);
-    console.log(filteredPoke)
 });
 
 //GRABS POKEMON INFO AND DISPLAYS INFO\\
@@ -22,10 +21,9 @@ function fetchPokemon(e) {
 
     Promise.all(promises).then(results => {
         pokemon = results.map(data => ({
-            name: data.name,
-            id: data.id,
-            image: data.sprites['front_default'],
-            type: data.types.map((type) => type.type.name).join(', ')
+            name: data.name.toUpperCase(),
+            image: data.sprites.other.dream_world['front_default'],
+            type: data.types.map((type) => type.type.name.toUpperCase()).join(', ')
         }))
         displayPokemon(pokemon);
     });
@@ -35,8 +33,11 @@ function fetchPokemon(e) {
     const displayPokemon = (pokemon) => {
         const pokemonHTMLString =  pokemon.map((pokeman) => `
         <li class="card">
-            <img class="card-img" src = "${pokeman.image}"/>
-            <h2 class="card-title">${pokeman.id}. ${pokeman.name}</h2>
+        <div id="imgBg"><img class="card-img" src = "${pokeman.image}"/>
+        </div>
+            <hr>
+            <h2 class="card-title">${pokeman.name}</h2>
+            <hr>
             <p class="card-subtitle">Type: ${pokeman.type}</p>
         </li>
     `).join('')
