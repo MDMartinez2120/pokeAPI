@@ -1,16 +1,18 @@
 const pokedex = document.getElementById('pokedex');
-const userSearch = document.getElementById('searchInput');
-let pokemonCharacters = [];
+const searchBar = document.getElementById('searchBar');
+let pokemon = [];
 
-userSearch.addEventListener('keyup', (e) => {
+//SEARCHBAR\\
+searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value;
-    const filteredPoke = pokemonCharacters.filter((poke) => {
-        return (poke.name.includes(searchString)
-        );
+    const filteredPoke = pokemon.filter((poke) => {
+        return poke.name.includes(searchString);
     });
     displayPokemon(filteredPoke);
+    console.log(filteredPoke)
 });
 
+//GRABS POKEMON INFO AND DISPLAYS INFO\\
 function fetchPokemon(e) {
     const promises = [];
     for (let i = 1; i <= 150; i++) {
@@ -19,7 +21,7 @@ function fetchPokemon(e) {
     }
 
     Promise.all(promises).then(results => {
-        const pokemon = results.map(data => ({
+        pokemon = results.map(data => ({
             name: data.name,
             id: data.id,
             image: data.sprites['front_default'],
@@ -29,9 +31,9 @@ function fetchPokemon(e) {
     });
 }
 
-
+//POKEMON DISPLAY FORMAT\\
     const displayPokemon = (pokemon) => {
-        const pokemonHTMLString =  pokemon.map(pokeman => `
+        const pokemonHTMLString =  pokemon.map((pokeman) => `
         <li class="card">
             <img class="card-img" src = "${pokeman.image}"/>
             <h2 class="card-title">${pokeman.id}. ${pokeman.name}</h2>
