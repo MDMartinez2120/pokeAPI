@@ -6,7 +6,7 @@ let pokemon = [];
 searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value;
     const filteredPoke = pokemon.filter((poke) => {
-        return poke.name.toLowerCase().includes(searchString);
+        return poke.name.toLowerCase().includes(searchString) || poke.type.toLowerCase().includes(searchString);
     });
     displayPokemon(filteredPoke);
 });
