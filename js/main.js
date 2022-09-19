@@ -1,5 +1,6 @@
 const pokedex = document.getElementById('pokedex');
 const searchBar = document.getElementById('searchBar');
+const oneCard = document.getElementById('outputCard');
 let pokemon = [];
 
 //SEARCHBAR\\
@@ -43,5 +44,4 @@ function fetchPokemon(e) {
     `).join('')
         pokedex.innerHTML = pokemonHTMLString;
 }
-
 fetchPokemon();
