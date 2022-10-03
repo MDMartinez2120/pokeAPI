@@ -19,9 +19,9 @@
 }
 
 #pokedex {
-    padding-inline-start: 0;
+    padding-inline-start: 1em;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     grid-gap: 20px;
 }
 
@@ -49,8 +49,10 @@ hr {
 }
 
 #header {
+    /*background: rgb(0,0,1);*/
+    /*background: linear-gradient(0deg, rgba(0,0,1,1) 0%, rgba(28,106,135,1) 43%);*/
     background: rgb(0,0,1);
-    background: linear-gradient(0deg, rgba(0,0,1,1) 0%, rgba(28,106,135,1) 43%);
+    background: linear-gradient(0deg, rgba(0,0,1,1) 0%, rgba(246,68,6,1) 43%);
 }
 
 form {
@@ -68,4 +70,9 @@ form {
 h1 {
     font-size: 50px;
     color: white;
+}
+
+body {
+    background: rgb(0,0,1);
+    background: radial-gradient(circle, rgba(0,0,1,1) 0%, rgba(50,224,218,1) 43%);
 }
